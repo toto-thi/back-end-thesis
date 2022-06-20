@@ -10,6 +10,8 @@ export default gql`
         endDate: String!
         targetAmount: Int!
         createdBy: User!
+        createdAt: String!
+        updatedAt: String!
     }
 
     input ProjectInput {
@@ -19,11 +21,12 @@ export default gql`
         startDate: String!
         endDate: String!
         targetAmount: Int!
+        updatedAt: String!
     }
 
     extend type Query {
         getAllProjects: [Project!]!
-        getProjectById(pid: ID!): Project!
+        getProjectById(id: ID!): Project!
     }
 
     extend type Mutation{

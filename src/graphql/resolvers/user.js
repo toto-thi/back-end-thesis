@@ -6,7 +6,7 @@ import { hash, compare } from "bcryptjs";
 export default {
   Query: {
     fetchUsers: async () => await User.find(),
-    fetchUserById: async (_, { id }) => await User.findById(id),
+    fetchUserById: async (_, { id }) => await User.findById(id).populate('createdProject'),
   },
 
   Mutation: {
