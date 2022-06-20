@@ -25,7 +25,6 @@ const AuthMiddleware = async (req, res, next) => {
     return next();
   }
 
-  // console.log("decoded Token", decodedToken)
   if (!decodedToken) {
     req.isAuth = false;
     return next();
@@ -38,7 +37,7 @@ const AuthMiddleware = async (req, res, next) => {
     return next();
   }
 
-  req.userId = authUser.userId;
+  req.userId = decodedToken.userId;
   req.isAuth = true;
   return next();
 };

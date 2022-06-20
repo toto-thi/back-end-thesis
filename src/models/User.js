@@ -35,11 +35,18 @@ const UserSchema = new Schema(
       type: Number,
       default: 0,
     },
+    walletID: {
+      type: String,
+    },
+    createdProject: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Projects'
+    }]
   },
   {
     timestamps: true,
   }
 );
 
-const User = model("users", UserSchema);
+const User = model("Users", UserSchema);
 export default User;

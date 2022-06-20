@@ -11,7 +11,8 @@ export default gql`
     role: String
     imgUrl: String
     tokenVersion: Int
-    #postedProject: [Project]
+    walletID: String
+    createdProject: [Project!]
   }
 
   input UserInput {
@@ -39,15 +40,14 @@ export default gql`
     email: String
     password: String
     imageUrl: String
+    walletID: String
   }
 
-  # QUERY
   extend type Query {
     fetchUsers: [User!]!
     fetchUserById(id: ID!): User!
   }
 
-  #MUTATION
   extend type Mutation {
     createUser(userInput: UserInput): LoginResponse!
     login(loginInput: LoginInput): LoginResponse!

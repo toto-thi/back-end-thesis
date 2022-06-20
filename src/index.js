@@ -30,10 +30,11 @@ const startApp = async () => {
       // csrfPrevention: true,
       playground: process.env.MODE, // need some change later
       context: ({ req }) => {
-        const { isAuth } = req;
+        const { isAuth, userId } = req;
         return {
           req,
           isAuth,
+          userId
         };
       },
     });
