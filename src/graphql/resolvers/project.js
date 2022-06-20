@@ -4,8 +4,8 @@ import { ApolloError } from "apollo-server-express";
 
 export default {
   Query: {
-    getAllProjects: async () => await Project.find(),
-    getProjectById: async (_, { id }) => await Project.findById(id),
+    getAllProjects: async () => await Project.find().populate('createdBy'),
+    getProjectById: async (_, { id }) => await Project.findById(id).populate('createdBy'),
   },
   Mutation: {
     addProject: async (
@@ -26,11 +26,6 @@ export default {
         throw new ApolloError("You must be authenticated for this action.");
       }
       try {
-        const checkTitle = await Project.findOne({ title });
-
-        if (checkTitle) {
-          throw new Error("This project is already existed");
-        }
 
         const newProject = new Project({
           title,
@@ -39,19 +34,17 @@ export default {
           startDate,
           endDate,
           targetAmount,
-          createdBy: req.userId,
+          createdBy: req.userId.toString(),
         });
 
-        await newProject.save();
+        let result = await newProject.save();
+        await result.populate("createdBy");
 
         const creator = await User.findById(req.userId);
         creator.createdProject.push(newProject);
         await creator.save();
 
-        return {
-          ...newProject._doc,
-          // createdBy:  newProject.createdBy
-        };
+        return result;
       } catch (err) {
         throw new ApolloError(err.message, 400);
       }
@@ -67,6 +60,7 @@ export default {
           startDate,
           endDate,
           targetAmount,
+          updatedAt
         },
       },
       req
@@ -94,6 +88,7 @@ export default {
             startDate,
             endDate,
             targetAmount,
+            updatedAt: new Date(updatedAt)
           },
           { new: true }
         );
@@ -122,7 +117,7 @@ export default {
           }
         );
 
-        //will consider use update status insteand of this later
+        //will consider use update status instead of this later
         await Project.deleteOne({ _id: id });
 
         return "Project has been deleted.";
