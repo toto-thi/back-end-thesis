@@ -48,7 +48,7 @@ const startApp = async () => {
     app.listen(process.env.PORT, () => {
       success({
         badge: true,
-        message: `Server started on port ${process.env.PORT}`,
+        message: `🚀 Server started on port ${process.env.PORT}`,
       });
     });
   } catch (err) {
