@@ -29,7 +29,7 @@ const UserSchema = new Schema(
     imgUrl: {
       type: String,
       default:
-        "https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png",
+        "https://wilcity.com/wp-content/uploads/2020/06/115-1150152_default-profile-picture-avatar-png-green.jpg",
     },
     tokenVersion: {
       type: Number,
