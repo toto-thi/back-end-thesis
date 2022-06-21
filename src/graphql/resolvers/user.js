@@ -5,20 +5,30 @@ import { hash, compare } from "bcryptjs";
 
 export default {
   Query: {
-    fetchUsers: async () => await User.find(),
-    fetchUserById: async (_, { id }) => await User.findById(id).populate('createdProject'),
+    getAllUsers: async (_, {}, req) => {
+      if (!req.isAuth) {
+        throw new ApolloError("you must be authenticated for this action.");
+      }
+
+      return await User.find();
+    },
+    userProfile: async (_, { id }, req) => {
+      if (!req.isAuth) {
+        throw new ApolloError("you must be authenticated for this action.");
+      }
+
+      return await User.findById(id).populate("createdProject");
+    },
   },
 
   Mutation: {
     createUser: async (
       _,
-      { userInput: { firstname, lastname, dob, email, password, role } }
+      { userInput: { firstname, lastname, dob, gender, email, password } }
     ) => {
       try {
-        // check existing user
         const oldUser = await User.findOne({ email });
 
-        // throw error if user exist
         if (oldUser) {
           throw new ApolloError(
             email + " is already registered.",
@@ -32,9 +42,9 @@ export default {
           firstname: firstname,
           lastname: lastname,
           dob: dob,
+          gender: gender,
           email: email.toLowerCase(),
           password: encryptedPassword,
-          role: role,
         });
 
         await newUser.save();
@@ -68,7 +78,15 @@ export default {
       _,
       {
         id,
-        updateInput: { firstname, lastname, dob, email, password, imgUrl },
+        updateInput: {
+          firstname,
+          lastname,
+          dob,
+          gender,
+          email,
+          password,
+          imgUrl,
+        },
       },
       req
     ) => {
@@ -80,6 +98,7 @@ export default {
       if (firstname !== undefined) updateData.firstname = firstname;
       if (lastname !== undefined) updateData.lastname = lastname;
       if (dob !== undefined) updateData.dob = dob;
+      if (gender !== undefined) updateData.gender = gender;
       if (email !== undefined) updateData.email = email;
       if (password !== undefined) updateData.password = password;
       if (imgUrl !== undefined) updateData.imgUrl = imgUrl;
@@ -90,6 +109,7 @@ export default {
           firstname,
           lastname,
           dob,
+          gender,
           email,
           password,
           imgUrl,

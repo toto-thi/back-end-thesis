@@ -1,18 +1,20 @@
 import express from "express";
 import mongoose from "mongoose";
+import cors from 'cors';
 import bodyParser from "body-parser";
 import AuthMiddleware from "./middleware/is-auth";
+import graphqlUploadExpress from "graphql-upload/graphqlUploadExpress";
 
 import { ApolloServer } from "apollo-server-express";
 import { success, error } from "consola";
 import { join } from "path";
 import { typeDefs, resolvers } from "./graphql";
-import  graphqlUploadExpress  from 'graphql-upload/graphqlUploadExpress';
 
 const app = express();
 require("dotenv").config();
 
 app.disable("x-powered-by");
+app.use(cors());
 app.use(AuthMiddleware);
 app.use(bodyParser.json());
 app.use(express.static(join(__dirname, "./uploads")));
@@ -34,7 +36,7 @@ const startApp = async () => {
         return {
           req,
           isAuth,
-          userId
+          userId,
         };
       },
     });

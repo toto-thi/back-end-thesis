@@ -6,6 +6,7 @@ export default gql`
     firstname: String!
     lastname: String!
     dob: String
+    gender: String
     email: String!
     password: String!
     role: String
@@ -19,6 +20,7 @@ export default gql`
     firstname: String!
     lastname: String!
     dob: String
+    gender: String
     email: String!
     password: String!
     role: String
@@ -37,6 +39,7 @@ export default gql`
     firstname: String
     lastname: String
     dob: String
+    gender: String
     email: String
     password: String
     imageUrl: String
@@ -44,13 +47,13 @@ export default gql`
   }
 
   extend type Query {
-    fetchUsers: [User!]!
-    fetchUserById(id: ID!): User!
+    getAllUsers: [User!]!
+    userProfile(id: ID!): User!
   }
 
   extend type Mutation {
-    createUser(userInput: UserInput): LoginResponse!
-    login(loginInput: LoginInput): LoginResponse!
+    createUser(userInput: UserInput!): LoginResponse!
+    login(loginInput: LoginInput!): LoginResponse!
     updateUser(id: ID!, updateInput: UpdateInput): User!
     deleteUser(id: ID!): String
     # revokeRefreshTokensForUser(id: ID!): Boolean
