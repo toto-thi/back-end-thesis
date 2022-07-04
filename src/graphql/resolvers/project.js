@@ -4,8 +4,15 @@ import { ApolloError } from "apollo-server-express";
 
 export default {
   Query: {
-    getAllProjects: async () => await Project.find().populate('createdBy'),
-    getProjectById: async (_, { id }) => await Project.findById(id).populate('createdBy'),
+    getAllProjects: async () => await Project.find().populate("createdBy"),
+    getProjectById: async (_, { id }) =>
+      await Project.findById(id).populate("createdBy"),
+    getPendingProjects: async () => await Project.find({ isPending: true }),
+    getApprovedProjects: async () => await Project.find({ isApproved: true }),
+    getRejectedProjects: async () => await Project.find({ isRejected: true }),
+    getClosedProjects: async () => await Project.find({ isClosed: true })
+
+
   },
   Mutation: {
     addProject: async (
@@ -26,7 +33,6 @@ export default {
         throw new ApolloError("You must be authenticated for this action.");
       }
       try {
-
         const newProject = new Project({
           title,
           description,
@@ -60,7 +66,7 @@ export default {
           startDate,
           endDate,
           targetAmount,
-          updatedAt
+          updatedAt,
         },
       },
       req
@@ -88,7 +94,7 @@ export default {
             startDate,
             endDate,
             targetAmount,
-            updatedAt: new Date(updatedAt)
+            updatedAt: new Date(updatedAt),
           },
           { new: true }
         );
@@ -121,6 +127,29 @@ export default {
         await Project.deleteOne({ _id: id });
 
         return "Project has been deleted.";
+      } catch (err) {
+        throw new ApolloError(err.message, 400);
+      }
+    },
+    approveProject: async (_, { id, approval }, req) => {
+      if (!req.isAuth) {
+        throw new ApolloError("You must be authenticated for this action.");
+      }
+
+      try {
+        const res = await Project.findByIdAndUpdate(
+          id,
+          {
+            isPending: false,
+            isApproved: approval,
+          },
+          {
+            new: true,
+          }
+        );
+
+        await res.save();
+        return true;
       } catch (err) {
         throw new ApolloError(err.message, 400);
       }
