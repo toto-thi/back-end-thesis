@@ -12,6 +12,10 @@ export default gql`
         createdBy: User!
         createdAt: String!
         updatedAt: String!
+        isApproved: Boolean!
+        isRejected: Boolean!
+        isClose: Boolean!
+        isPending: Boolean!
     }
 
     input ProjectInput {
@@ -27,11 +31,16 @@ export default gql`
     extend type Query {
         getAllProjects: [Project!]!
         getProjectById(id: ID!): Project!
+        getPendingProjects: [Project!]!
+        getClosedProjects: [Project!]!
+        getApprovedProjects: [Project!]!
+        getRejectedProjects: [Project!]!
     }
 
     extend type Mutation{
         addProject(projectInput: ProjectInput!): Project!
         updateProject(id: ID!, projectInput: ProjectInput): Project!
         deleteProject(id: ID!): String!
+        approveProject(id: ID!, approval: Boolean!): Boolean!
     }
 `;
