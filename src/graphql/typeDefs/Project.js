@@ -42,5 +42,7 @@ export default gql`
         updateProject(id: ID!, projectInput: ProjectInput): Project!
         deleteProject(id: ID!): String!
         approveProject(id: ID!, approval: Boolean!): Boolean!
+        rejectProject(id: ID!, rejection: Boolean!): Boolean!
+        # closeProject(id: ID!, isClose: Boolean!): Boolean!
     }
 `;
