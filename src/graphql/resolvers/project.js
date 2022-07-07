@@ -7,12 +7,14 @@ export default {
     getAllProjects: async () => await Project.find().populate("createdBy"),
     getProjectById: async (_, { id }) =>
       await Project.findById(id).populate("createdBy"),
-    getPendingProjects: async () => await Project.find({ isPending: true }).populate("createdBy"),
-    getApprovedProjects: async () => await Project.find({ isApproved: true }).populate("createdBy"),
-    getRejectedProjects: async () => await Project.find({ isRejected: true }).populate("createdBy"),
-    getClosedProjects: async () => await Project.find({ isClosed: true }).populate("createdBy")
-
-
+    getPendingProjects: async () =>
+      await Project.find({ isPending: true }).populate("createdBy"),
+    getApprovedProjects: async () =>
+      await Project.find({ isApproved: true }).populate("createdBy"),
+    getRejectedProjects: async () =>
+      await Project.find({ isRejected: true }).populate("createdBy"),
+    getClosedProjects: async () =>
+      await Project.find({ isClosed: true }).populate("createdBy"),
   },
   Mutation: {
     addProject: async (
@@ -149,6 +151,27 @@ export default {
         );
 
         await res.save();
+        return true;
+      } catch (err) {
+        throw new ApolloError(err.message, 400);
+      }
+    },
+    rejectProject: async (_, { id, rejection }, req) => {
+      if (!req.isAuth) {
+        throw new ApolloError("You must be authenticated for this action.");
+      }
+
+      try {
+        const res = await Project.findByIdAndUpdate(
+          id,
+          {
+            isPending: false,
+            isRejected: rejection,
+          },
+          { new: true }
+        );
+
+        await res.save()
         return true;
       } catch (err) {
         throw new ApolloError(err.message, 400);
