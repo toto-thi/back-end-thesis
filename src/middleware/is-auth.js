@@ -3,7 +3,6 @@ import User from "../models/User";
 
 const AuthMiddleware = async (req, res, next) => {
   const authHeader = req.headers.authorization;
-  // console.log("TOKEN", authHeader);
 
   if (!authHeader) {
     req.isAuth = false;
