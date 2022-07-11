@@ -9,6 +9,7 @@ export default gql`
         startDate: String!
         endDate: String!
         targetAmount: Int!
+        donateAmount: Int!
         createdBy: User!
         createdAt: String!
         updatedAt: String!
