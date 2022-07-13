@@ -42,7 +42,7 @@ export default gql`
     gender: String
     email: String
     password: String
-    imageUrl: String
+    imgUrl: String
     walletID: String
   }
 
