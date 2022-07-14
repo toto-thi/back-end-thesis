@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 
 const TransactionSchema = new Schema(
   {
-    transactionNumber: {
+    txnHash: {
       type: String,
       required: true,
     },
@@ -20,6 +20,10 @@ const TransactionSchema = new Schema(
     },
     amount: {
       type: Number,
+      required: true,
+    },
+    message: {
+      type: String,
       required: true,
     },
     donatedBy: {

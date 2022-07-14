@@ -86,7 +86,7 @@ export default {
           email,
           password,
           imgUrl,
-          walletID
+          walletID,
         },
       },
       req
@@ -101,10 +101,9 @@ export default {
       if (dob !== undefined) updateData.dob = dob;
       if (gender !== undefined) updateData.gender = gender;
       if (email !== undefined) updateData.email = email;
-      if (password !== undefined) updateData.password = password;
+      if (password !== undefined) updateData.password = await hash(password, 12);
       if (imgUrl !== undefined) updateData.imgUrl = imgUrl;
       if (walletID !== undefined) updateData.walletID = walletID;
-
 
       const user = await User.findByIdAndUpdate(
         id,
@@ -114,9 +113,9 @@ export default {
           dob,
           gender,
           email,
-          password,
+          password: updateData.password,
           imgUrl,
-          walletID
+          walletID,
         },
         { new: true }
       );

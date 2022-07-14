@@ -14,16 +14,15 @@ export default {
       _,
       {
         donateInput: {
-          transactionNumber,
+          txnHash,
           projectID,
           fromWalledID,
           toWalletID,
           amount,
+          message,
           donatedBy,
         },
       }
-    ) => {
-        
-    },
+    ) => {},
   },
 };
