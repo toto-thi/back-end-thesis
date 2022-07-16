@@ -43,6 +43,7 @@ export default gql`
     email: String
     password: String
     imgUrl: String
+    role: String
     walletID: String
   }
 

@@ -10,7 +10,7 @@ export default {
         throw new ApolloError("you must be authenticated for this action.");
       }
 
-      return await User.find();
+      return await User.find().populate("createdProject");
     },
     userProfile: async (_, { id }, req) => {
       if (!req.isAuth) {
@@ -86,6 +86,7 @@ export default {
           email,
           password,
           imgUrl,
+          role,
           walletID,
         },
       },
@@ -103,6 +104,7 @@ export default {
       if (email !== undefined) updateData.email = email;
       if (password !== undefined) updateData.password = await hash(password, 12);
       if (imgUrl !== undefined) updateData.imgUrl = imgUrl;
+      if (role !== undefined) updateData.role = role;
       if (walletID !== undefined) updateData.walletID = walletID;
 
       const user = await User.findByIdAndUpdate(
@@ -115,6 +117,7 @@ export default {
           email,
           password: updateData.password,
           imgUrl,
+          role,
           walletID,
         },
         { new: true }

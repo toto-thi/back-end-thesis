@@ -15,6 +15,8 @@ export default {
       await Project.find({ isRejected: true }).populate("createdBy"),
     getClosedProjects: async () =>
       await Project.find({ isClosed: true }).populate("createdBy"),
+    getProjectByCreator: async (_, { uid }) =>
+      await Project.find({ createdBy: uid }).populate("createdBy"),
   },
   Mutation: {
     addProject: async (
@@ -171,7 +173,7 @@ export default {
           { new: true }
         );
 
-        await res.save()
+        await res.save();
         return true;
       } catch (err) {
         throw new ApolloError(err.message, 400);
