@@ -36,6 +36,7 @@ export default gql`
         getClosedProjects: [Project!]!
         getApprovedProjects: [Project!]!
         getRejectedProjects: [Project!]!
+        getProjectByCreator(uid: ID!): [Project]
     }
 
     extend type Mutation{
