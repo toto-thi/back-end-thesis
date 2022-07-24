@@ -5,12 +5,14 @@ export default gql`
         id: ID!
         title: String!
         description: String!
+        location: String!
         imageList: String
         startDate: String!
         endDate: String!
         targetAmount: Int!
         donateAmount: Int!
         createdBy: User!
+        contractAddress: String
         createdAt: String!
         updatedAt: String!
         isApproved: Boolean!
@@ -22,11 +24,12 @@ export default gql`
     input ProjectInput {
         title: String!
         description: String!
+        location: String!
         imageList: String
         startDate: String!
         endDate: String!
         targetAmount: Int!
-        updatedAt: String!
+        updatedAt: String
     }
 
     extend type Query {
@@ -43,7 +46,7 @@ export default gql`
         addProject(projectInput: ProjectInput!): Project!
         updateProject(id: ID!, projectInput: ProjectInput): Project!
         deleteProject(id: ID!): String!
-        approveProject(id: ID!, approval: Boolean!): Boolean!
+        approveProject(id: ID!, approval: Boolean!, contractAddress: String!): Boolean!
         rejectProject(id: ID!, rejection: Boolean!): Boolean!
         # closeProject(id: ID!, isClose: Boolean!): Boolean!
     }

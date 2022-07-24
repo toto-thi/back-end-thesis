@@ -30,7 +30,7 @@ const startApp = async () => {
       typeDefs,
       resolvers,
       // csrfPrevention: true,
-      playground: process.env.MODE, // need some change later
+      // playground: process.env.MODE, // need some change later
       context: ({ req }) => {
         const { isAuth, userId } = req;
         return {

@@ -102,7 +102,7 @@ export default {
       if (dob !== undefined) updateData.dob = dob;
       if (gender !== undefined) updateData.gender = gender;
       if (email !== undefined) updateData.email = email;
-      if (password !== undefined) updateData.password = await hash(password, 12);
+      if (password !== undefined && password !== '') updateData.password = await hash(password, 12);
       if (imgUrl !== undefined) updateData.imgUrl = imgUrl;
       if (role !== undefined) updateData.role = role;
       if (walletID !== undefined) updateData.walletID = walletID;
