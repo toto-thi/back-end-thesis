@@ -19,7 +19,6 @@ export default {
         `../../uploads/${name}-${Date.now()}${ext}`
       );
 
-      console.log("path: ", storeFile);
       let writeStream = createWriteStream(storeFile);
       await stream.pipe(writeStream);
 

@@ -68,6 +68,7 @@ export default {
         projectInput: {
           title,
           description,
+          location,
           imageList,
           startDate,
           endDate,
@@ -86,6 +87,7 @@ export default {
 
         if (!title === undefined) updateData.title = title;
         if (!description === undefined) updateData.description = description;
+        if (!location === undefined) updateData.location = location;
         if (!imageList === undefined) updateData.imageList = imageList;
         if (!startDate === undefined) updateData.startDate = startDate;
         if (!endDate === undefined) updateData.endDate = endDate;
@@ -96,6 +98,7 @@ export default {
           {
             title,
             description,
+            location,
             imageList,
             startDate,
             endDate,
@@ -153,7 +156,7 @@ export default {
           {
             isPending: false,
             isApproved: approval,
-            contractAddress: contractAddress
+            contractAddress: contractAddress,
           },
           {
             new: true,
