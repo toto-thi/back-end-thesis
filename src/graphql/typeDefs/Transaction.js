@@ -7,7 +7,7 @@ export default gql`
     projectID: String!
     fromWalletID: String!
     toWalletID: String!
-    amount: Int!
+    amount: Float!
     message: String
     donatedBy: User!
   }
@@ -15,9 +15,10 @@ export default gql`
   input DonateInput {
     txnHash: String!
     projectID: String!
+    contractAddress: String!
     fromWalletID: String!
     toWalletID: String!
-    amount: Int!
+    amount: Float!
     message: String
     donatedBy: String!
   }

@@ -16,13 +16,36 @@ export default {
         donateInput: {
           txnHash,
           projectID,
-          fromWalledID,
+          contractAddress,
+          fromWalletID,
           toWalletID,
           amount,
           message,
           donatedBy,
         },
+      }, req
+    ) => {
+      if (!req.isAuth) {
+        throw new ApolloError("You must be authenticated for this action.");
       }
-    ) => {},
+
+      try {
+        const newTransaction = new Transaction({
+          txnHash,
+          projectID,
+          contractAddress,
+          fromWalletID,
+          toWalletID,
+          amount,
+          message,
+          donatedBy: donatedBy
+        })
+
+        let result = await newTransaction.save()
+        return result
+      } catch (err) {
+        throw new ApolloError(err.message)
+      }
+    },
   },
 };

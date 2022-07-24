@@ -9,8 +9,8 @@ export default gql`
         imageList: String
         startDate: String!
         endDate: String!
-        targetAmount: Int!
-        donateAmount: Int!
+        targetAmount: Float!
+        donateAmount: Float!
         createdBy: User!
         contractAddress: String
         createdAt: String!
@@ -22,13 +22,13 @@ export default gql`
     }
 
     input ProjectInput {
-        title: String!
-        description: String!
-        location: String!
+        title: String
+        description: String
+        location: String
         imageList: String
-        startDate: String!
-        endDate: String!
-        targetAmount: Int!
+        startDate: String
+        endDate: String
+        targetAmount: Float
         updatedAt: String
     }
 
