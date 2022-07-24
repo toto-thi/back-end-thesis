@@ -25,6 +25,7 @@ export default {
         projectInput: {
           title,
           description,
+          location,
           imageList,
           startDate,
           endDate,
@@ -40,6 +41,7 @@ export default {
         const newProject = new Project({
           title,
           description,
+          location,
           imageList,
           startDate,
           endDate,
@@ -135,10 +137,15 @@ export default {
         throw new ApolloError(err.message, 400);
       }
     },
-    approveProject: async (_, { id, approval }, req) => {
+    approveProject: async (_, { id, approval, contractAddress }, req) => {
       if (!req.isAuth) {
         throw new ApolloError("You must be authenticated for this action.");
       }
+
+      let cAddress = {};
+
+      if (!contractAddress === undefined && contractAddress === "")
+        cAddress.contractAddress = contractAddress;
 
       try {
         const res = await Project.findByIdAndUpdate(
@@ -146,6 +153,7 @@ export default {
           {
             isPending: false,
             isApproved: approval,
+            contractAddress: contractAddress
           },
           {
             new: true,

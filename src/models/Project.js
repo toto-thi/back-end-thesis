@@ -10,6 +10,10 @@ const ProjectSchema = new Schema(
       type: String,
       required: true,
     },
+    location: {
+      type: String,
+      required: true
+    },
     imageList: {
       type: String,
       required: false,
@@ -50,6 +54,9 @@ const ProjectSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Users",
     },
+    contractAddress: {
+      type: String,
+    }
   },
   {
     timestamps: true,
