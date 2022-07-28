@@ -40,6 +40,7 @@ export default gql`
         getApprovedProjects: [Project!]!
         getRejectedProjects: [Project!]!
         getProjectByCreator(uid: ID!): [Project]
+        calTotalDonation: Float!
     }
 
     extend type Mutation{

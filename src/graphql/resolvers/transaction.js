@@ -1,5 +1,4 @@
-import Project from "../typeDefs/Project";
-import User from "../../models/User";
+import Project from "../../models/Project";
 import Transaction from "../../models/Transaction";
 import { ApolloError } from "apollo-server-express";
 
@@ -23,7 +22,8 @@ export default {
           message,
           donatedBy,
         },
-      }, req
+      },
+      req
     ) => {
       if (!req.isAuth) {
         throw new ApolloError("You must be authenticated for this action.");
@@ -38,13 +38,24 @@ export default {
           toWalletID,
           amount,
           message,
-          donatedBy: donatedBy
-        })
+          donatedBy,
+        });
 
-        let result = await newTransaction.save()
-        return result
+        let result = await newTransaction.save();
+
+        const response = await Project.findByIdAndUpdate(
+          projectID,
+          {
+            $inc: {
+              donateAmount: amount,
+            },
+          }
+        );
+
+        await response.save();
+        return result.populate("donatedBy");
       } catch (err) {
-        throw new ApolloError(err.message)
+        throw new ApolloError(err.message);
       }
     },
   },
