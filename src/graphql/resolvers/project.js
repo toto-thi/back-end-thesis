@@ -126,7 +126,7 @@ export default {
         );
 
         await project.save();
-        return project;
+        return project.populate("createdBy");
       } catch (err) {
         throw new ApolloError(err.message, 400);
       }
