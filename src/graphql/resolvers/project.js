@@ -17,6 +17,20 @@ export default {
       await Project.find({ isClosed: true }).populate("createdBy"),
     getProjectByCreator: async (_, { uid }) =>
       await Project.find({ createdBy: uid }).populate("createdBy"),
+    calTotalDonation: async () => {
+      const result = await Project.aggregate([
+        {
+          $group: {
+            _id: null,
+            total: {
+              $sum: "$donateAmount",
+            },
+          },
+        },
+      ]);
+
+      return parseFloat(result[0].total);
+    },
   },
   Mutation: {
     addProject: async (
