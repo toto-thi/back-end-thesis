@@ -87,6 +87,7 @@ export default {
           startDate,
           endDate,
           targetAmount,
+          donateAmount,
           updatedAt,
         },
       },
@@ -106,6 +107,7 @@ export default {
         if (!startDate === undefined) updateData.startDate = startDate;
         if (!endDate === undefined) updateData.endDate = endDate;
         if (!targetAmount === undefined) updateData.targetAmount = targetAmount;
+        if (!donateAmount === undefined) updateData.donateAmount = donateAmount;
 
         const project = await Project.findByIdAndUpdate(
           id,
@@ -117,6 +119,7 @@ export default {
             startDate,
             endDate,
             targetAmount,
+            donateAmount,
             updatedAt: new Date(updatedAt),
           },
           { new: true }

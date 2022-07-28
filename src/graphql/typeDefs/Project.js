@@ -29,6 +29,7 @@ export default gql`
         startDate: String
         endDate: String
         targetAmount: Float
+        donateAmount: Float
         updatedAt: String
     }
 
