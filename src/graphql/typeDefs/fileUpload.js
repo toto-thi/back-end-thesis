@@ -1,7 +1,12 @@
 import { gql } from "apollo-server-express";
 
 export default gql`
-    extend type Mutation {
-        fileUploader(file: Upload!): String!
-    }
-`
+  type File {
+    url: String!
+  }
+
+  extend type Mutation {
+    fileUploader(file: Upload!): File!
+    multipleFileUploader(files: [Upload]!): [File]!
+  }
+`;
