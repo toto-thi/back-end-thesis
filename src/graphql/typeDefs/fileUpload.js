@@ -6,7 +6,7 @@ export default gql`
   }
 
   extend type Mutation {
-    fileUploader(file: Upload!): File!
+    fileUploader(file: Upload!): String!
     multipleFileUploader(files: [Upload]!): [File]!
   }
 `;

@@ -15,7 +15,7 @@ const ProjectSchema = new Schema(
       required: true
     },
     imageList: {
-      type: String,
+      type: Array,
       required: false,
     },
     startDate: {
