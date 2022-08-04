@@ -26,7 +26,7 @@ export default {
         storeFile.split("uploads")[1]
       }`;
 
-      return { url: storeFile };
+      return storeFile;
     },
     multipleFileUploader: async (_, { files }) => {
       let url = [];

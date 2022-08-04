@@ -116,7 +116,7 @@ export default {
           gender,
           email,
           password: updateData.password,
-          imgUrl,
+          imgUrl: updateData.imgUrl,
           role,
           walletID,
         },
