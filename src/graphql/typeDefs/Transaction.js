@@ -4,7 +4,7 @@ export default gql`
   type Transaction {
     id: ID!
     txnHash: String!
-    projectID: String!
+    projectID: Project!
     fromWalletID: String!
     toWalletID: String!
     amount: Float!
@@ -25,7 +25,8 @@ export default gql`
 
   extend type Query {
     allTransactions: [Transaction!]!
-    transactionPerProject(id: ID!): Transaction!
+    transactionPerProject(id: ID!): [Transaction]!
+    transactionPerUser(walletAddress: String!): [Transaction]!
   }
 
   extend type Mutation {

@@ -138,7 +138,7 @@ export default {
 
       try {
         const owner = await Project.findOne({ id });
-
+        
         // remove ref Id from creator
         await User.updateOne(
           {
