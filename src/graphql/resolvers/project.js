@@ -14,7 +14,7 @@ export default {
     getRejectedProjects: async () =>
       await Project.find({ isRejected: true }).populate("createdBy"),
     getClosedProjects: async () =>
-      await Project.find({ isClosed: true }).populate("createdBy"),
+      await Project.find({ isClose: true }).populate("createdBy"),
     getProjectByCreator: async (_, { uid }) =>
       await Project.find({ createdBy: uid }).populate("createdBy"),
     calTotalDonation: async () => {
@@ -172,6 +172,8 @@ export default {
           id,
           {
             isPending: false,
+            isRejected: false,
+            isClose: false,
             isApproved: approval,
             contractAddress: contractAddress,
           },
@@ -196,7 +198,32 @@ export default {
           id,
           {
             isPending: false,
+            isApproved: false,
+            isClose: false,
             isRejected: rejection,
+          },
+          { new: true }
+        );
+
+        await res.save();
+        return true;
+      } catch (err) {
+        throw new ApolloError(err.message, 400);
+      }
+    },
+    closeProject: async (_, { id }, req) => {
+      if (!req.isAuth) {
+        throw new ApolloError("You must be authenticated for this action.");
+      }
+
+      try {
+        const res = await Project.findByIdAndUpdate(
+          id,
+          {
+            isApproved: false,
+            isPending: false,
+            isRejected: false,
+            isClose: true,
           },
           { new: true }
         );
