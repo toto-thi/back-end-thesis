@@ -63,6 +63,6 @@ export default gql`
       contractAddress: String!
     ): Boolean!
     rejectProject(id: ID!, rejection: Boolean!): Boolean!
-    # closeProject(id: ID!, isClose: Boolean!): Boolean!
+    closeProject(id: ID!): Boolean!
   }
 `;
