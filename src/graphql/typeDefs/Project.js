@@ -43,13 +43,13 @@ export default gql`
   }
 
   extend type Query {
-    getAllProjects: [Project!]!
+    getAllProjects: [Project]!
     getProjectById(id: ID!): Project!
-    getPendingProjects: [Project!]!
+    getPendingProjects: [Project]!
     getClosedProjects: [Project!]!
     getApprovedProjects: [Project!]!
     getRejectedProjects: [Project!]!
-    getProjectByCreator(uid: ID!): [Project]
+    getProjectByCreator(uid: ID!): [Project]!
     calTotalDonation: Float!
   }
 

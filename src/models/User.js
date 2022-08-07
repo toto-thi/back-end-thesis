@@ -41,6 +41,10 @@ const UserSchema = new Schema(
     walletID: {
       type: String,
     },
+    isActive: {
+      type: Boolean,
+      default: true
+    },
     createdProject: [{
       type: Schema.Types.ObjectId,
       ref: 'Projects'
