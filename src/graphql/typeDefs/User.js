@@ -10,6 +10,7 @@ export default gql`
     email: String!
     password: String!
     role: String
+    isActive: Boolean!
     imgUrl: String
     tokenVersion: Int
     walletID: String

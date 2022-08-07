@@ -10,7 +10,7 @@ export default {
         throw new ApolloError("you must be authenticated for this action.");
       }
 
-      return await User.find().populate("createdProject");
+      return await User.find({ isActive: true}).populate("createdProject");
     },
     userProfile: async (_, { id }, req) => {
       if (!req.isAuth) {
@@ -102,7 +102,8 @@ export default {
       if (dob !== undefined) updateData.dob = dob;
       if (gender !== undefined) updateData.gender = gender;
       if (email !== undefined) updateData.email = email;
-      if (password !== undefined && password !== '') updateData.password = await hash(password, 12);
+      if (password !== undefined && password !== "")
+        updateData.password = await hash(password, 12);
       if (imgUrl !== undefined) updateData.imgUrl = imgUrl;
       if (role !== undefined) updateData.role = role;
       if (walletID !== undefined) updateData.walletID = walletID;
@@ -129,8 +130,21 @@ export default {
         throw new ApolloError("you must be authenticated for this action.");
       }
 
-      await User.findByIdAndDelete(id);
-      return "User has been deleted.";
+      const checkExistUser = await User.findById(id);
+
+      if (!!checkExistUser) {
+        await User.findByIdAndUpdate(
+          id,
+          {
+            isActive: false,
+          },
+          { new: true }
+        );
+
+        return "User has been deleted.";
+      }
+
+      return "User does not exist.";
     },
   },
 };
