@@ -56,6 +56,10 @@ const ProjectSchema = new Schema(
     },
     contractAddress: {
       type: String,
+    },
+    referenceDoc: {
+      type: String,
+      required: true
     }
   },
   {
