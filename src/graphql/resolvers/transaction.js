@@ -1,6 +1,7 @@
 import Project from "../../models/Project";
 import Transaction from "../../models/Transaction";
 import { ApolloError } from "apollo-server-express";
+import consolaGlobalInstance from "consola";
 
 export default {
   Query: {
@@ -12,6 +13,10 @@ export default {
         .populate("projectID"),
     transactionPerUser: async (_, { walletAddress }) =>
       await Transaction.find({ toWalletID: walletAddress })
+        .populate("donatedBy")
+        .populate("projectID"),
+    myPersonalTransaction: async (_, { walletAddress }) =>
+      await Transaction.find({ fromWalletID: walletAddress })
         .populate("donatedBy")
         .populate("projectID"),
   },
@@ -36,6 +41,8 @@ export default {
         throw new ApolloError("You must be authenticated for this action.");
       }
 
+      const realAmount = parseFloat(parseFloat(amount).toFixed(2))
+
       try {
         const newTransaction = new Transaction({
           txnHash,
@@ -43,16 +50,18 @@ export default {
           contractAddress,
           fromWalletID,
           toWalletID,
-          amount,
+          amount: realAmount,
           message,
           donatedBy,
         });
 
         let result = await newTransaction.save();
 
+        
+
         const response = await Project.findByIdAndUpdate(projectID, {
           $inc: {
-            donateAmount: amount,
+            donateAmount: realAmount,
           },
         });
 

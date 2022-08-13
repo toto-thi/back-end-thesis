@@ -1,8 +1,7 @@
 import { gql } from "apollo-server-express";
 
 export default gql`
-
-  type ImageFiles {
+  type Files {
     url: String
   }
 
@@ -11,7 +10,8 @@ export default gql`
     title: String!
     description: String!
     location: String!
-    imageList: [ImageFiles]
+    imageList: [Files]
+    referenceDoc: String
     startDate: String!
     endDate: String!
     targetAmount: Float!
@@ -26,7 +26,7 @@ export default gql`
     isPending: Boolean!
   }
 
-  input ImageUpload {
+  input FileUpload {
     url: String
   }
 
@@ -36,7 +36,8 @@ export default gql`
     location: String
     startDate: String
     endDate: String
-    imageList: [ImageUpload]
+    imageList: [FileUpload]
+    referenceDoc: String!
     targetAmount: Float
     donateAmount: Float
     updatedAt: String

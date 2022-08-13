@@ -6,6 +6,7 @@ export default {
   Upload: GraphqlUpload,
   Mutation: {
     fileUploader: async (_, { file }) => {
+
       let { filename, createReadStream } = await file;
 
       let stream = createReadStream();

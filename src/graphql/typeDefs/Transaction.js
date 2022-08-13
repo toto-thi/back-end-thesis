@@ -27,6 +27,7 @@ export default gql`
     allTransactions: [Transaction!]!
     transactionPerProject(id: ID!): [Transaction]!
     transactionPerUser(walletAddress: String!): [Transaction]!
+    myPersonalTransaction(walletAddress: String!): [Transaction]!
   }
 
   extend type Mutation {
