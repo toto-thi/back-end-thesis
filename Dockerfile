@@ -6,11 +6,11 @@ WORKDIR /app
 COPY ./package*.json ./
 COPY ./.env ./
 
-RUN npm install
+RUN yarn install
 
 COPY ./ /app/
 
 EXPOSE 4000
 
 # Run the application in development mode
-CMD ["npm", "run", "dev"]
+CMD ["yarn", "dev"]
